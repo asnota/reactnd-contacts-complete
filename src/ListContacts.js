@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
@@ -14,20 +13,21 @@ class ListContacts extends Component {
     query: ''
   }
 
-  updateQuery = (query) => {
-    this.setState({ query: query.trim() })
-  }
+updateQuery = (query) => {
+  this.setState({ query: query.trim() })
+}
 
-  clearQuery = () => {
-    this.setState({ query: '' })
-  }
+clearQuery = () => {
+  this.setState({ query: '' })
+}
 
-  render() {
+  render(){
+    //Refactoring via ES6 Destricturing
     const { contacts, onDeleteContact } = this.props
     const { query } = this.state
 
     let showingContacts
-    if (query) {
+    if(query){
       const match = new RegExp(escapeRegExp(query), 'i')
       showingContacts = contacts.filter((contact) => match.test(contact.name))
     } else {
@@ -36,7 +36,7 @@ class ListContacts extends Component {
 
     showingContacts.sort(sortBy('name'))
 
-    return (
+    return(
       <div className='list-contacts'>
         <div className='list-contacts-top'>
           <input
@@ -46,10 +46,6 @@ class ListContacts extends Component {
             value={query}
             onChange={(event) => this.updateQuery(event.target.value)}
           />
-          <Link
-            to='/create'
-            className='add-contact'
-          >Add Contact</Link>
         </div>
 
         {showingContacts.length !== contacts.length && (
@@ -59,10 +55,10 @@ class ListContacts extends Component {
           </div>
         )}
 
-        <ol className='contact-list'>
+        <ol className = 'contact-list'>
           {showingContacts.map((contact) => (
             <li key={contact.id} className='contact-list-item'>
-              <div className='contact-avatar' style={{
+              <div className='contact-avatar'style={{
                 backgroundImage: `url(${contact.avatarURL})`
               }}/>
               <div className='contact-details'>
@@ -76,8 +72,10 @@ class ListContacts extends Component {
           ))}
         </ol>
       </div>
+
     )
   }
 }
+
 
 export default ListContacts
